@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  div.container
+    div.alert.alert-dismissible.alert-warning
+      button(type="button", class="close", data-dismiss="alert") &times;
+      h4 Warning!
+      p This is text of warning
+    div.header.clearfix
+      nav
+        ul.nav.nav-pills.pull-right
+          li(role="presentation", class="active"): a(href="#") Home
+          li(role="presentation", class=""): a(href="#") News
+          li(role="presentation", class=""): a(href="#") Events
+      h3.text-muted DonNTU Telegram
+    div.jumbotron
+      h1= title
+      p.lead Welcome to #{title}
+      p #{message}
+      p: img(src="/images/donntu-telegram.png")
+      a(href="https://telegram.me/DonNTUBot").btn.btn-default @DonNTUBot
+    footer.footer
+      .row
+        .col-md-6 &copy; 2016 Yegorov A.
+        .col-md-6
+          span.pull-right For more information go to 
+            a(href="https://github.com/yegorov/donntu-telegram") Github project
