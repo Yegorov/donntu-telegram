@@ -1,9 +1,11 @@
 const util = require('util');
-var path = require('path');
+const path = require('path');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const app = module.exports = express();
+app.use(cookieParser())
 
-const routesMain = require('./routes/route');
+const routesMain = require('./routes/index');
 const routesTelegram = require('./routes/telegram');
 
 var server = {
@@ -11,13 +13,62 @@ var server = {
     host: 'localhost'
 };
 
+
 app.set('env', 'production');
 
+const model = require("./models/index")
+app.get('/test', function (req, res) {
+  model.news.create({
+    title: "Test3",
+    date_created: new Date(2016, 10, 9),
+    content_id: "id43",
+    text_preview: "Test preview3"
+  }).then(function(news) {
 
-app.get('/about', function (req, res) {
-  res.send('donntu-telegram about');
+    var tags = []
+
+    return model.tags.findOrCreate({
+      where: {
+        tag: 'tag3'
+      }
+    }).then(function(tag) {
+      tags.push(tag[0])
+      return model.tags.findOrCreate({
+        where: {
+          tag: 'tag1'
+        }
+      });
+    }).then(function(tag){
+      console.log("created2 \n")
+      tags.push(tag[0])
+      return [tags, news];
+    })
+
+  }).then(function(tagsnews){
+    tagsnews[1].setTags(tagsnews[0])
+    res.send(tagsnews[0]);
+  });
+
+
+  /*model.news.create({
+    title: "Test3",
+    date_created: new Date(2016, 10, 9),
+    content_id: "id43",
+    text_preview: "Test preview3",
+    tags: [{tag: "tag1"}, {tag: "tag3"}]
+  }, {
+  include: [ model.tags ]
+  }).then(function(r) {
+    res.send(r);
+    //console.log(r);
+  });*/
+
+/*
+  model.news.findById(1).then(function(r){
+    //console.log(r);
+    console.log(r.getUrl)
+  })*/
 });
-
 
 app.use('/', routesMain);
 app.use('/telegram', routesTelegram);
@@ -64,4 +115,3 @@ app.use(function(err, req, res, next) {
 app.listen(server.port, function () {
   console.log(util.format('App launch on http://%s:%d', server.host, server.port));
 });
-

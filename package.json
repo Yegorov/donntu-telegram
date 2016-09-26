@@ -29,6 +29,7 @@
     "chai": "^3.5.0",
     "cheerio": "^0.22.0",
     "config": "^1.21.0",
+    "cookie-parser": "^1.4.3",
     "debug": "^2.2.0",
     "express": "^4.14.0",
     "mocha": "^3.0.2",
@@ -36,7 +37,9 @@
     "pug": "^2.0.0-alpha6",
     "request": "^2.75.0",
     "sequelize": "^3.24.3",
+    "sequelize-cli": "^2.4.0",
     "should": "^11.1.0",
+    "sqlite3": "^3.1.4",
     "supertest": "^2.0.0",
     "telegram-bot-api": "^1.2.0"
   }
