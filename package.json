@@ -5,7 +5,11 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "./node_modules/.bin/mocha --reporter spec"
+    "test": "./node_modules/.bin/mocha --reporter spec",
+    "postinstall": "./node_modules/bower/bin/bower install"
+  },
+  "engines": {
+    "node": "^5.4.0"
   },
   "repository": {
     "type": "git",
@@ -24,23 +28,27 @@
     "url": "https://github.com/yegorov/donntu-telegram/issues"
   },
   "homepage": "https://github.com/yegorov/donntu-telegram#readme",
-  "dependencies": {
+  "private": true,
+  "devDependencies": {
     "assert": "^1.4.1",
     "chai": "^3.5.0",
+    "mocha": "^3.0.2",
+    "should": "^11.1.0",
+    "supertest": "^2.0.0"
+  },
+  "dependencies": {
+    "bower": "*",
     "cheerio": "^0.22.0",
     "config": "^1.21.0",
     "cookie-parser": "^1.4.3",
     "debug": "^2.2.0",
     "express": "^4.14.0",
-    "mocha": "^3.0.2",
     "momentjs": "^1.1.17",
     "pug": "^2.0.0-alpha6",
     "request": "^2.75.0",
     "sequelize": "^3.24.3",
     "sequelize-cli": "^2.4.0",
-    "should": "^11.1.0",
     "sqlite3": "^3.1.4",
-    "supertest": "^2.0.0",
     "telegram-bot-api": "^1.2.0"
   }
 }
