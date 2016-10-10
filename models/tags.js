@@ -1,11 +1,16 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var tags = sequelize.define('tags', {
-    tag: {
+    tag_ru: {
+      type: DataTypes.STRING,
+      unique: true
+    },
+    tag_en: {
       type: DataTypes.STRING,
       unique: true
     }
   }, {
+    underscored: true,
     classMethods: {
       associate: function(models) {
         tags.belongsToMany(models.news,
@@ -13,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
             through: {
               model: models.tags_in_news
             },
-            foreignKey: 'tag_id'
+            foreignKey: 'tags_id'
           });
         }
      }

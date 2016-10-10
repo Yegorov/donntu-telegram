@@ -15,18 +15,18 @@ module.exports = {
           key: 'id'
         }
       },
-      tag_id: {
+      tags_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'tags',
           key: 'id'
         }
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }

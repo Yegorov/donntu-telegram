@@ -1,12 +1,15 @@
 {
   "name": "donntu-telegram",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "DonNTU news grabber. Telegram bot for news site DonNTU.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "test": "./node_modules/.bin/mocha --reporter spec",
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "postinstall": [
+      "./node_modules/bower/bin/bower install",
+      "./node_modules/.bin/sequelize db:migrate"
+    ]
   },
   "engines": {
     "node": "^5.4.0"
@@ -43,7 +46,8 @@
     "cookie-parser": "^1.4.3",
     "debug": "^2.2.0",
     "express": "^4.14.0",
-    "momentjs": "^1.1.17",
+    "moment": "^2.15.1",
+    "mysql": "^2.11.1",
     "pug": "^2.0.0-alpha6",
     "request": "^2.75.0",
     "sequelize": "^3.24.3",

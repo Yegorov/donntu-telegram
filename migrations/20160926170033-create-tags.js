@@ -8,21 +8,25 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      tag: {
+      tag_ru: {
         type: Sequelize.STRING,
         unique: true
       },
-      createdAt: {
+      tag_en: {
+        type: Sequelize.STRING,
+        unique: true
+      },
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Tags');
+    return queryInterface.dropTable('tags');
   }
 };
