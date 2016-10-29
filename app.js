@@ -6,6 +6,7 @@ const app = module.exports = express();
 
 const routesMain = require('./routes/index');
 const routesTelegram = require('./routes/telegram');
+const routesAPI_v1 = require('./routes/apiV1');
 
 var server = {
     port: 3000,
@@ -20,6 +21,7 @@ app.use(cookieParser());
 
 app.use('/', routesMain);
 app.use('/telegram', routesTelegram);
+app.use('/api/v1', routesAPI_v1)
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/vendors',  express.static(__dirname + '/bower_components'));

@@ -73,14 +73,103 @@ block content
           ## How use
                     
           Currently we support some methods:
-          - `/api/v1/getLastNews?count=<1-10>` - Get last news, default count: `5`
-          - `/api/v1/getLastEvents?count=<5-30>` - Get last events, default count: `15`
+          - `/api/v1/getNews?offset=<0-10>&limit=<5-20>` - Get news, default  offset: `0`, limit: `10`
+          - `/api/v1/getEvents?offset=<0-10>&limit=<5-20>` - Get events, default  offset: `0`, limit: `10`
+          - `/api/v1/getNew?id=<1>` - Get new by id
           
-          #### Example usage in python:
+          #### Example usage in curl
+          ```
+          curl http://.../api/v1/getNew?id=1
+          /*
+            {
+                "status": "OK",
+                "response": {
+                    "new": {
+                    "title": "title new",
+                    "text_content": "long content ....",
+                    "url": "http://donntu.org/news/id2016....",
+                    "date": "пятница, октябрь 2016",
+                    "tags": [
+                        {
+                        "tag_en": "konferenciya",
+                        "tag_ru": "Конференция"
+                        },
+                        {
+                        "tag_en": "sotrudnichestvo",
+                        "tag_ru": "сотрудничество"
+                        }
+                    ]
+                    }
+                }
+            }
+          */
+          ```
+          
+          #### Example usage in JavaScript
+          ```js
+          fetch('http://.../api/v1/getNews')
+          .then((res) => res.json())
+          .then((res) => console.log(res))
+          // print in console
+          /*
+            {
+                "status": "OK",
+                "response": {
+                    "news": [
+                    {
+                        "id": 1,
+                        "title": "",
+                        "url": "http://donntu.org/news/id201610271153",
+                        "text_preview": "...",
+                        "image_url": "http://donntu.org/sites/.../img.jpg",
+                        "time_from_now": "2 дня назад",
+                        "tags": [
+                        {
+                            "tag_en": "gazeta",
+                            "tag_ru": "газета"
+                        },
+                        {
+                            "tag_en": "doneckiy-politehnik",
+                            "tag_ru": "донецкий политехник"
+                        }
+                        ]
+                    },
+                    ...
+                    ],
+                    "count": 35,
+                    "prevOffset": -5,
+                    "nextOffset": 5,
+                    "limit": 5
+                }
+            }
+          */
+          ```
+          
+          #### Example usage in Python:
           ```python
           import requests
-          r = requests.get('https://.../api/v1/getLastNews?count=5')
+          r = requests.get('https://.../api/v1/getEvents')
           print(r.json())
+          
+          """
+          {                       
+              "status": "OK",       
+              "response": {         
+                  "events": [         
+                  {                 
+                      "date": "среда, октябрь 2016",
+                      "title": "...",
+                      "url": "http://..."
+                  },
+                  ...
+                  ],
+                  "count": 16,
+                  "prevOffset": -15,
+                  "nextOffset": 15,
+                  "limit": 15
+              }
+          }
+          """
           ```
           
       else
