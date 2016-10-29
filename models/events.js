@@ -1,4 +1,5 @@
 'use strict';
+const util =  require('util');
 module.exports = function(sequelize, DataTypes) {
   var events = sequelize.define('events', {
     title: DataTypes.STRING,
@@ -13,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     getterMethods: {
       getUrl: function() {
-        return util.format("https://donntu.org/news/%s", this.content_id);
+        return util.format("http://donntu.org/news/%s", this.content_id);
       }
     }
   });

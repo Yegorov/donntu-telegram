@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     getterMethods: {
       getUrl: function() {
-        return util.format("https://donntu.org/news/%s", this.content_id);
+        return util.format("http://donntu.org/news/%s", this.content_id);
       }
     }
   });

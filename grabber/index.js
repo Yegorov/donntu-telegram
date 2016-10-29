@@ -106,7 +106,7 @@ function grabNews(options, callback) {
 
       $(selMain).each(function(i, el) {
         var title = $(selTitle, el).text()
-        var id = $(selTitle, el).attr('href').match(/\/news\/([id]*\d+)/)[1]
+        var id = $(selTitle, el).attr('href').match(/\/news\/(.+)/)[1]
         var date = $(selDate, el).text()
         date = moment(date, "DD MMMM, YYYY - HH:mm", "ru").format()
         var textPreview = $(selTextPreview, el).text()
@@ -135,7 +135,7 @@ function grabNews(options, callback) {
 
       $(selEvent).each(function(i, el) {
         var title = $(selTitleEvent, el).text()
-        var id = $(selTitleEvent, el).attr('href').match(/.*\/news\/([id]*\d+)/)[1]
+        var id = $(selTitleEvent, el).attr('href').match(/.*\/news\/(.+)/)[1]
         var date = $(selDateEvent, el).attr('content')
 
         arrEvents.push({

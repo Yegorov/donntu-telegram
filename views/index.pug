@@ -10,17 +10,81 @@ block content
     div.header.clearfix
       nav
         ul.nav.nav-pills.pull-right
-          li(role="presentation", class="active"): a(href="#") Home
-          li(role="presentation", class=""): a(href="#") News
-          li(role="presentation", class=""): a(href="#") Events
-          li(role="presentation", class=""): a(href="#") API
+          li(role="presentation", class=(page == "home" ? "active" : ""))
+            a(href="/home") Home
+          li(role="presentation", class=(page == "news" ? "active" : ""))
+            a(href="/news") News
+          li(role="presentation", class=(page == "events" ? "active" : ""))
+            a(href="/events") Events
+          li(role="presentation", class=(page == "api" ? "active" : ""))
+            a(href="/api") API
       h3.text-muted DonNTU Telegram
-    div.jumbotron
-      h1= title
-      p.lead Welcome to #{title}
-      p #{message}
-      p: img(src="/images/donntu-telegram.png")
-      a(href="https://telegram.me/DonNTUBot").btn.btn-primary.shake @DonNTUBot
+    if page == 'home'
+      div.jumbotron
+        h1= title
+        p.lead Welcome to #{title}!
+        p #{message}
+        p: img(src="/images/donntu-telegram.png")
+        a(href="https://telegram.me/DonNTUBot").btn.btn-primary @DonNTUBot
+    else 
+      h2= title
+      if page == 'news'
+        each newObj in newsObj
+          div.card
+            div(class="card-block", style="padding: 10px")
+              span.time= newObj["time_from_now"]
+              h4.card-title= newObj['title']
+              p.card-text= newObj['text_preview']
+              div(style="margin: 10px; color: #fff")
+                each tag in newObj['tags']
+                  span(class="tag grey", style="padding: 10px; margin-right: 10px")= tag['tag_ru']
+                
+              a(href="/news/" + newObj['id'], class="btn btn-primary") Просмотр на отдельной странице
+              a(href=newObj['url'], class="btn btn-primary") Просмотр на donntu.org
+          <br/>
+        div(class="text-center", role="group")
+          ul.pagination
+            if prevOffset >= 0
+              li: a(href="/news?offset=" + prevOffset + "&limit=" + limit) Prev
+            if nextOffset < count
+              li: a(href="/news?offset=" + nextOffset + "&limit=" + limit) Next
+      else if page == 'events'
+        ul
+          - var i = 0;
+          each event in events
+            - i++;
+            li
+              h4
+                span= i + ". "
+                a(href=event['url'])= event['title']
+                  //- span= " " + event['date']
+
+        div(class="text-center", role="group")
+          ul.pagination
+            if prevOffset >= 0
+              li: a(href="/events?offset=" + prevOffset + "&limit=" + limit) Prev
+            if nextOffset < count
+              li: a(href="/events?offset=" + nextOffset + "&limit=" + limit) Next
+      else if page == 'api'
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js')
+        script= `hljs.initHighlightingOnLoad();`
+        //- langPrefix='highlight-')
+        :markdown-it(linkify langPrefix='')
+          ## How use
+                    
+          Currently we support some methods:
+          - `/api/v1/getLastNews?count=<1-10>` - Get last news, default count: `5`
+          - `/api/v1/getLastEvents?count=<5-30>` - Get last events, default count: `15`
+          
+          #### Example usage in python:
+          ```python
+          import requests
+          r = requests.get('https://.../api/v1/getLastNews?count=5')
+          print(r.json())
+          ```
+          
+      else
+        h2 Not found page
     footer.footer
       .row
         .col-md-6 &copy; 2016 Yegorov A.

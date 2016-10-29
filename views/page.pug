@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  div.container
+    div.header.clearfix
+      nav
+        ul.nav.nav-pills.pull-right
+          li(role="presentation", class=(page == "home" ? "active" : ""))
+            a(href="/home") Home
+          li(role="presentation", class=(page == "news" ? "active" : ""))
+            a(href="/news") News
+          li(role="presentation", class=(page == "events" ? "active" : ""))
+            a(href="/events") Events
+          li(role="presentation", class=(page == "api" ? "active" : ""))
+            a(href="/api") API
+      h3.text-muted DonNTU Telegram
+    span.date= date
+    h2= title
+    div.text !{text_content}
+    div.tags(style="margin: 10px;color: #fff")
+      each tag in tags
+        span(class="tag grey", style="padding: 10px; margin-right: 10px")= tag['tag_ru']
+                
+              
+    a(href=url, class="btn btn-primary") Просмотр на donntu.org
+    
+    footer.footer
+      .row
+        .col-md-6 &copy; 2016 Yegorov A.
+        .col-md-6
+          span.pull-right= 'For more information see,'
+            a(href="https://github.com/yegorov/donntu-telegram") Github project
