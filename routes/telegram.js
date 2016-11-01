@@ -14,7 +14,7 @@ var helpMessage = `Доступные команды:
 Вопросы и пожелания вы можете оставить [тут](https://github.com/yegorov/donntu-telegram/issues) 
 `;
 
-var unknownMessage = "Неизвестная комманда ¯\\_(ツ)_/¯";
+var unknownMessage = "Неизвестная команда `¯\\_(ツ)_/¯`";
 var errorMessage = "Произошла ошибка";
 
 var commands = {};
@@ -31,7 +31,7 @@ commands['/topNews'] = function() {
   .then(function(result) {
     var template = "%d. [%s](%s) %s\n"; //1. [title](url) time_from_now
     var content = "";
-    result.forEach(function(el, i) {
+    result.news.forEach(function(el, i) {
       content += util.format(template, i + 1, el.title, el.url, el.time_from_now);
     });
     return content;
