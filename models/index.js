@@ -9,10 +9,17 @@ var config    = require(__dirname + '/../config/config.json')[env];
 var db        = {};
 
 if (config.use_env_variable) {
-  var sequelize = new Sequelize(process.env[config.use_env_variable]);
+  if (env === 'production') {
+    if(!process.env.MYSQL_CONNECTION_STRING) 
+        throw new Error("Env variable MYSQL_CONNECTION_STRING not define");
+    var sequelize = new Sequelize(process.env.MYSQL_CONNECTION_STRING);
+  }
+  else
+     var sequelize = new Sequelize(process.env[config.use_env_variable]);
 } else {
   var sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
+
 
 fs
   .readdirSync(__dirname)

@@ -1,6 +1,7 @@
 const express = require('express');
 const model = require('../models/index');
 const moment = require('moment');
+const grabber = require('../grabber/additionToDB');
 const router = express.Router();
 
 moment.locale('ru');
@@ -199,6 +200,37 @@ function api(req, res) {
   })
 }
 
+function basicAuthResolverSync(req, res) {
+  var sendAuthResponse = function() {
+    res.set('WWW-Authenticate', 'Basic realm="DonNTU Telegram"');
+    res.sendStatus(401);
+    return false;
+  }
+  var auth = req.get('Authorization') || null;
+  if (auth == null)
+    return sendAuthResponse();
+
+  auth = auth.split(' ');
+  if(auth[0] != 'Basic')
+    return sendAuthResponse();
+  
+  var auth_decode = (new Buffer(auth[1], 'base64').toString('utf8')).split(':');
+  
+  if(auth_decode[0] != process.env.ADMIN_USERNAME || 
+     auth_decode[1] != process.env.ADMIN_PASSWORD) {
+    return sendAuthResponse();
+  }
+  return true;
+} 
+
+function updateDatabase(req, res) {
+  if(basicAuthResolverSync(req, res)) {
+    grabber(function(result) {
+      console.log('Update Database result: ', result);
+      res.end('Update Database result: ' + result);
+    }); 
+  } 
+}
 
 router.get('/', home);
 router.get('/home', home);
@@ -206,5 +238,7 @@ router.get('/news', news);
 router.get('/news/:id', new_by_id)
 router.get('/events', events);
 router.get('/api', api);
+var pathdb = process.env.SECRET_UPDATE_PATH || "updatedb";
+router.get('/' + pathdb, updateDatabase);
 
 module.exports = router;
