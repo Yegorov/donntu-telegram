@@ -30,8 +30,6 @@
 
 ![6_dokkur](img/6_dokkur.PNG)
 
-![6.1_dokkur](img/6.1_dokkur.PNG)
-
 ## Переходи на вкладку `Settings`, запоминаем `Git URL` и вводим переменные окружения
 
 ![7_dokkur](img/7_dokkur.PNG)
@@ -51,4 +49,14 @@ $ git remote add dokkur GIT_URL
 ```
 $ git push dokkur master
 // Ход развертывания приложения
+```
+
+Возможна ошибка работы с БД (неправильна кодировка, ), для решения этой проблемы
+необходимо приконектится к БД (через [CLI Toolbelt](https://dokkur.com/#!/documentation-ru/platform/toolbelt))
+командой: `dokkur db:connect appname dbname` и выполнить такие SQL-запросы:
+
+```
+alter table news convert to character set utf8 collate utf8_unicode_ci;
+alter table events convert to character set utf8 collate utf8_unicode_ci;
+alter table tags convert to character set utf8 collate utf8_unicode_ci;
 ```
