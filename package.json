@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "test": "./node_modules/.bin/mocha --reporter spec",
-    "postinstall": "bower install && sequelize db:migrate"
+    "postinstall": "bower install && sequelize db:migrate --url=$MYSQL_CONNECTION_STRING"
   },
   "engines": {
     "node": "^5.4.0"
